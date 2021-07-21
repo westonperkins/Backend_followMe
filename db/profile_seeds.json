@@ -1,0 +1,11 @@
+[
+    {
+        "name": "weston perkins",
+        "userName": "wperkins123",
+        "company": "general assembly",
+        "occupation": "software engineer",
+        "position": "student",
+        "software": ["vscode", "slack", "zoom", "IOS", "dropbox"],
+        "hardware": ["macbook pro", "dell monitor", "hyperX keyboard", "hyperX mouse", "headphones"]
+    }
+]
