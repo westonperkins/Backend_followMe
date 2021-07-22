@@ -5,6 +5,7 @@ const methodOverride = require('method-override')
 
 const postController = require('./controllers/posts')
 
+
 app.use('/', postController)
 
 app.use(express.json())

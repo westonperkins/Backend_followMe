@@ -1,9 +1,9 @@
-const profileData = require('./post_seeds.json')
+const profileData = require('./profile_seeds.json')
 const Profile = require('../models/profile_model')
 
 Profile.deleteMany({})
     .then(() => {
-        return Media.insertMany(profileData)
+        return Profile.insertMany(profileData)
     })
     .then(console.log)
     .catch(console.error)
