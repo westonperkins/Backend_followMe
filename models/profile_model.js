@@ -12,3 +12,6 @@ const profileSchema = new mongoose.Schema(
         hardware: Array,
     }
 )
+
+const Profile = mongoose.model('Profile', profileSchema)
+module.exports = Profile
