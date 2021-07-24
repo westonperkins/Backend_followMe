@@ -1,5 +1,5 @@
 const postData = require('./post_seeds.json')
-const Post = require('../models/profile_model')
+const Post = require('../models/post_model.js')
 
 Post.deleteMany({})
     .then(() => {
