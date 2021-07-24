@@ -1,15 +1,26 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const app = express()
 const methodOverride = require('method-override')
 
-const postController = require('./controllers/posts')
+const profileController = require('./controllers/profileRouter')
 
 
-app.use('/', postController)
+app.use(cors())
+app.use(express.json())
+
+
+app.use('/', profileController)
+
+
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
+
+
+
 
 app.set('port', process.env.PORT || 5000 )
 

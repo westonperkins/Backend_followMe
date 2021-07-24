@@ -1,0 +1,5 @@
+atlas:
+username_westy
+password_2827K
+
+mongodb+srv://westy:<password>@followme.emkuo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
