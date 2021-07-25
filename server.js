@@ -4,20 +4,26 @@ const cors = require('cors')
 const app = express()
 const methodOverride = require('method-override')
 
-const profileController = require('./controllers/profileRouter')
-
 
 app.use(cors())
 app.use(express.json())
 
+const profileController = require('./controllers/profileRouter')
+const postsController = require('./controllers/postsRouter')
+
+// app.use('./profiles', profileController)
+// app.use('./posts', postsController)
+
 
 app.use('/', profileController)
+app.use('/posts', postsController)
 
-
+require('dotenv').config()
 
 
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+
 
 
 

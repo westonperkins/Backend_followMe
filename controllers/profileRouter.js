@@ -69,9 +69,10 @@ function isLoggedOut(req, res, next) {
 
 // READ specific user back
 
-router.get('/:username', (req, res) => {
+router.get('/:id', (req, res) => {
     let username = req.params.username
-    Profile.find({username: username})
+    let id = req.params.id
+    Profile.find({_id: id})
     .then((profs) => {
         res.send(profs)
         console.log(profs)
@@ -81,13 +82,12 @@ router.get('/:username', (req, res) => {
 
 // CREATE new user
 
-router.post('/register', async (req, res) => {
-    // try {
-        // const hashedPassword = await bcrypt.hash(req.body.password, 10)
+router.post('/register',  (req, res) => {
+
         let userInfo = {
             username: req.body.username,
             email: req.body.email,
-            // password: hashedPassword,
+            password: req.body.password,
             company: req.body.company,
             name: req.body.name,
             occupation: req.body.occupation,
@@ -98,11 +98,10 @@ router.post('/register', async (req, res) => {
         }
         Profile.create(userInfo)
         .then((user) => {
+            res.send(user)
             console.log(user)
         })
-    // } catch {
 
-    // }
 })
 
 
@@ -116,14 +115,34 @@ router.post('/login', passport.authenticate('local', {
 
 // UPDATE user profile
 
-router.put('/:username/edit', (req, res) => {
-
+router.put('/:id/edit', (req, res) => {
+    let id = req.params.id
+    let username = req.params.username
+    Profile.findOneAndUpdate(
+        {_id:id}, 
+        {$set: 
+            {
+                username: req.body.username, 
+                name: req.body.name
+            }
+        }, 
+        {new: true})
+    .then((user) => {
+        res.json(user)
+        console.log(user)
+    })
 })
 
 
 // DELETE profile 
 
 router.delete('/:username', (req, res) => {
+    let id = req.params.id
+    Profile.findOneAndRemove({_id: id}) 
+    .then((user) => {
+        res.send(user)
+        console.log(user + "deleted")
+    })
 
 })
 

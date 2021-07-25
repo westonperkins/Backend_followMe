@@ -8,8 +8,8 @@ const passport = require('passport')
 
 
 // READ main feed
-router.get('/posts', (req, res) => {
-    Posts.find({})
+router.get('/days', (req, res) => {
+    Posts.find()
     .then((posts) => {
         res.send(posts)
         console.log(posts)
@@ -18,21 +18,49 @@ router.get('/posts', (req, res) => {
 
 // READ individual post
 
-router.get('/posts/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let id = req.params.id
-
+    Posts.find({_id: id})
+    .then((post) => {
+        res.send(post)
+        console.log(post)
+    })
 })
 
 // CREATE post
 
 router.post('/newpost', (req, res) => {
+    let postInfo = {
+        instance: req.body.instance,
+        imageUpload: req.body.imageUpload
+    }
+    Posts.create(postInfo)
+    .then((post) => {
+        res.send(post)
+        console.log(post)
+    }) 
+})
 
+// EDIT post 
+
+router.put('/edit/:id', (req, res) => {
+    let id = req.params.id
+    Posts.findOneAndUpdate({_id:id}, {instance: req.body.instance})
+    .then((post) => {
+        res.send(post)
+        console.log(post + "updated")
+    })
 })
 
 // DELETE post 
 
-router.delete('/post/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     let id = req.params.id
+    Posts.findOneAndRemove({_id: id}) 
+    .then((post) => {
+        res.send(post)
+        console.log(post + "deleted")
+    })
 
 })
 
