@@ -43,11 +43,14 @@ router.post('/newpost', (req, res) => {
 
 // EDIT post 
 
-router.put('/edit/:id', (req, res) => {
+router.put('/:id/edit', (req, res) => {
     let id = req.params.id
-    Posts.findOneAndUpdate({_id:id}, {instance: req.body.instance})
+    Posts.findOneAndUpdate(
+        {_id:id}, 
+        {instance: req.body.instance, imageUpload: req.body.imageUpload},
+        {new: true})
     .then((post) => {
-        res.send(post)
+        res.json(post)
         console.log(post + "updated")
     })
 })

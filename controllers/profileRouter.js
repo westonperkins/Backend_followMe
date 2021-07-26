@@ -135,14 +135,22 @@ router.put('/:id/edit', (req, res) => {
         {_id:id}, 
         {$set: 
             {
-                username: req.body.username, 
-                name: req.body.name
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password,
+                company: req.body.company,
+                name: req.body.name,
+                occupation: req.body.occupation,
+                position: req.body.position,
+                software: req.body.software,
+                hardware: req.body.hardware,
+                profileImage: req.body.profileImage
             }
         }, 
         {new: true})
     .then((user) => {
         res.json(user)
-        console.log(user)
+        console.log(user +updated)
     })
 })
 
