@@ -64,15 +64,25 @@ function isLoggedOut(req, res, next) {
 
 
 
+// READ all users back
 
+router.get('/', (req, res) => {
+    let username = req.params.username
+    let id = req.params.id
+    Profile.find()
+    .then((profs) => {
+        res.send(profs)
+        console.log(profs)
+    })
 
+})
 
 // READ specific user back
 
-router.get('/:id', (req, res) => {
+router.get('/:username', (req, res) => {
     let username = req.params.username
     let id = req.params.id
-    Profile.find({_id: id})
+    Profile.find({username: username})
     .then((profs) => {
         res.send(profs)
         console.log(profs)
@@ -82,8 +92,8 @@ router.get('/:id', (req, res) => {
 
 // CREATE new user
 
-router.post('/register',  (req, res) => {
-
+router.post('/register',  async (req, res) => {
+    try {
         let userInfo = {
             username: req.body.username,
             email: req.body.email,
@@ -101,6 +111,9 @@ router.post('/register',  (req, res) => {
             res.send(user)
             console.log(user)
         })
+    } catch {
+        console.log('error')
+    }
 
 })
 
@@ -136,7 +149,7 @@ router.put('/:id/edit', (req, res) => {
 
 // DELETE profile 
 
-router.delete('/:username', (req, res) => {
+router.delete('/:id', (req, res) => {
     let id = req.params.id
     Profile.findOneAndRemove({_id: id}) 
     .then((user) => {
