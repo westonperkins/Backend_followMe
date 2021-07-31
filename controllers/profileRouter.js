@@ -21,22 +21,22 @@ router.use(express.urlencoded({ extended: true }));
 
 // MULTER--------------------------------
 
-const fileFilter = (req, file, cb) => {
+// const fileFilter = (req, file, cb) => {
 
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/gif') {
-        cb(null, true)
-    } else {
-        cb(null, false)
-    }
-}
+//     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/gif') {
+//         cb(null, true)
+//     } else {
+//         cb(null, false)
+//     }
+// }
  
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 1024 * 1024 * 5
-    },
-    fileFilter: fileFilter
-})
+// const upload = multer({
+//     storage: storage,
+//     limits: {
+//         fileSize: 1024 * 1024 * 5
+//     },
+//     fileFilter: fileFilter
+// })
 
 
 
@@ -173,7 +173,7 @@ router.post('/login', async (req, res) => {
 
 // READ all users back
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     let username = req.params.username
     let id = req.params.id
     Profile.find()
