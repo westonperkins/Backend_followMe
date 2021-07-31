@@ -1,8 +1,4 @@
 node_modules
 
-NODE_ENV=mongodb+srv://westy:2827K@followme.emkuo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-
-atlas:
-username_westy
-password_music72
+.env
 
