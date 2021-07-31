@@ -4,6 +4,9 @@ const mongoURI = process.env.NODE_ENV === 'production'
 ? process.env.DB_URL
 : 'mongodb://localhost/followmeLocal'
 
+
+// const mongoURI = process.env.DB_URL || 'mongodb://localhost/followmeLocal'
+
 mongoose 
     .connect(mongoURI, {
         useNewUrlParser: true,

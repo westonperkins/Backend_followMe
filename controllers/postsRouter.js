@@ -3,8 +3,33 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const Posts = require('../models/post_model')
 const bcrypt = require('bcrypt')
-const localStrategy = require('passport-local').Strategy
 const passport = require('passport')
+const multer = require('multer')
+const storage = multer.memoryStorage()
+
+
+// MULTER ------------------------------
+
+const fileFilter = (req, file, cb) => {
+
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/gif') {
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+})
+
+
+// --------------------------------------
+
 
 
 // READ main feed
@@ -36,8 +61,11 @@ router.post('/newpost', (req, res) => {
     }
     Posts.create(postInfo)
     .then((post) => {
-        res.send(post)
         console.log(post)
+        Posts.find()
+        .then((posts) => {
+            res.send(post)
+        })
     }) 
 })
 
