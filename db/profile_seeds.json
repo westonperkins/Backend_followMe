@@ -1,8 +1,10 @@
 [
     {
-        "name": "weston perkins",
-        "userName": "wperkins123",
+        "username": "wperkins123",
+        "email": "thebeanman@gmail.com",
+        "password": "beantime",
         "company": "general assembly",
+        "name": "weston perkins",
         "occupation": "software engineer",
         "position": "student",
         "software": ["vscode", "slack", "zoom", "IOS", "dropbox"],

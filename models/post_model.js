@@ -2,7 +2,7 @@ const mongoose = require('../db/connection')
 
 const postSchema = new mongoose.Schema(
     {
-        schedule: String,
+        instance: {type: String, default: ""},
         imageUpload: { data: Buffer, contentType: String },
     },
     { timestamps: true },
