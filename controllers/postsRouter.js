@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const multer = require('multer')
 const storage = multer.memoryStorage()
+const auth = require('../middleware/auth')
 
 
 // MULTER ------------------------------
@@ -57,7 +58,8 @@ router.get('/:id', (req, res) => {
 router.post('/newpost', (req, res) => {
     let postInfo = {
         instance: req.body.instance,
-        imageUpload: req.body.imageUpload
+        imageUpload: req.body.imageUpload,
+        postedBy: req.body.postedBy
     }
     Posts.create(postInfo)
     .then((post) => {

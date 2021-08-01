@@ -19,77 +19,6 @@ router.use(express.json())
 router.use(express.urlencoded({ extended: true }));
 
 
-// MULTER--------------------------------
-
-// const fileFilter = (req, file, cb) => {
-
-//     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/gif') {
-//         cb(null, true)
-//     } else {
-//         cb(null, false)
-//     }
-// }
- 
-// const upload = multer({
-//     storage: storage,
-//     limits: {
-//         fileSize: 1024 * 1024 * 5
-//     },
-//     fileFilter: fileFilter
-// })
-
-
-
-// PASSPORT------------------------------
-
-// router.use(passport.initialize());
-// router.use(passport.session());
-
-// passport.serializeUser((user, done) => {
-//     done(null, user.id)
-// })
-
-// passport.deserializeUser((id, done) => {
-//     Users.findById(id, (err, user) => {
-//         done(err, user)
-//     })
-// }) 
-
-// passport.use(new localStrategy((username, password, done) => {
-//     Users.findOne({ username: username }, (err, user) => {
-//         if (err) return done(err)
-//         if (!user) return done(null, false, { message: "Incorrect username"})
-        
-//         bcrypt.compare(password, user.password, (err, res) => {
-//             if (err) return done(err)
-//             if (res === false) {
-//                 return done(null, false, {message: "incorrect password"})
-//             }
-//             return done(null, user)
-//         })
-//     })
-// }))
-
-
-
-// function isLoggedIn(req, res, next) {
-// 	if (req.isAuthenticated()) return next();
-// 	res.redirect('/login');
-//     console.log('hi')
-
-// }
-
-// function isLoggedOut(req, res, next) {
-// 	if (!req.isAuthenticated()) return next();
-// 	res.redirect('/');
-//     console.log('he')
-// }
-
-
-
-// ___________________________________________
-
-
 
 // CREATE new user
 
@@ -136,10 +65,14 @@ router.post('/register', async (req, res) => {
 // LOGIN to profile
 
 
-// router.post('/login', passport.authenticate('local', {
-// 	successRedirect: '/',
-// 	failureRedirect: '/login?error=true'
-// }));
+router.get('/profile', auth, async(req, res) => {
+    const user = await Profile.findById(req.user._id)
+    console.log(req.user._id + "te")
+    res.json({
+        id: user._id,
+        name: user.name
+    })
+})
 
 
 router.post('/login', async (req, res) => {
@@ -173,7 +106,7 @@ router.post('/login', async (req, res) => {
 
 // READ all users back
 
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
     let username = req.params.username
     let id = req.params.id
     Profile.find()
