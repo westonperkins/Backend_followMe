@@ -70,7 +70,14 @@ router.get('/profile', auth, async(req, res) => {
     console.log(req.user._id + "te")
     res.json({
         id: user._id,
-        name: user.name
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        company: user.company,
+        occupation: user.occupation,
+        position: user.position,
+        software: user.software,
+        hardware: user.hardware
     })
 })
 
