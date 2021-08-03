@@ -59,7 +59,8 @@ router.post('/newpost', (req, res) => {
     let postInfo = {
         instance: req.body.instance,
         imageUpload: req.body.imageUpload,
-        postedBy: req.body.postedBy
+        postedBy: req.body.postedBy,
+        date: req.body.date
     }
     Posts.create(postInfo)
     .then((post) => {

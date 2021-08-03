@@ -24,13 +24,10 @@ router.use(express.urlencoded({ extended: true }));
 
 router.post('/register', async (req, res) => {
 
-    // const saltHash = genPassword(req.body.password)
-    // const salt = saltHash;
-    // const hash = saltHash.hash;
-
     const user = await Profile.findOne({username: req.body.username})
+
     if(user) {
-        return res.status(400).json({msg: "that username already exists"})
+        return res.status(400).json({msg: "That Username Already Exists"})
     }
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -46,8 +43,6 @@ router.post('/register', async (req, res) => {
                     software: req.body.software,
                     hardware: req.body.hardware,
                     profileImage: req.body.profileImage,
-                    // hash: hash,
-                    // salt: salt
                 }
                 Profile.create(userInfo)
                 .then((user) => {
@@ -85,7 +80,7 @@ router.get('/profile', auth, async(req, res) => {
 router.post('/login', async (req, res) => {
     const user = await Profile.findOne({username: req.body.username})
     if(!user) {
-        return res.status(400).json({msg: "user not found in db"})
+        return res.status(400).json({msg: "User Not Found"})
     }
     bcrypt.compare(req.body.password, user.password, (err, response) => {
         if(!response) {
