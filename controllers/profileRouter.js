@@ -111,27 +111,22 @@ router.post('/login', async (req, res) => {
 router.get('/', (req, res) => {
     let username = req.params.username
     let id = req.params.id
-    Profile.find()
-    .then((profs) => {
-        res.send(profs)
-        console.log(profs)
-    })
+    const user = await Profile.findOne({username: req.body.username})
+    if(!user) {
+        res.redirect('/login')
+        console.log('test')
+        // window.location="/login"
+    } else {
+        res.redirect('/posts/days')
+        console.log('test2')
+        // window.locaiton="/posts/days"
+    }
+    // Profile.find()
+    // .then((profs) => {
+    //     res.send(profs)
+    //     console.log(profs)
+    // })
 })
-
-// router.get('/', async(req, res) => {
-//     const user = await Profile.findById(req.user._id)
-//     res.json({
-//         id: user._id,
-//         username: user.username,
-//         name: user.name,
-//         email: user.email,
-//         company: user.company,
-//         occupation: user.occupation,
-//         position: user.position,
-//         software: user.software,
-//         hardware: user.hardware
-//     })
-// })
 
 
 // READ specific user back
