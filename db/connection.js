@@ -7,6 +7,8 @@ const mongoURI = process.env.NODE_ENV === 'production'
 
 // const mongoURI = process.env.DB_URL || 'mongodb://localhost/followmeLocal'
 
+// const mongoURI = "mongodb+srv://wperkins:GCSaHgp6kFufynT@followme.emkuo.mongodb.net/followmeDBv?retryWrites=true&w=majority"
+
 mongoose 
     .connect(mongoURI, {
         useNewUrlParser: true,
