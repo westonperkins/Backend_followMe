@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const multer = require('multer')
 const storage = multer.memoryStorage()
+const auth = require('../middleware/auth')
 
 
 // MULTER ------------------------------
@@ -34,7 +35,7 @@ const upload = multer({
 
 // READ main feed
 router.get('/days', (req, res) => {
-    Posts.find()
+    Posts.find().sort({updatedAt:-1})
     .then((posts) => {
         res.send(posts)
         console.log(posts)
@@ -57,13 +58,15 @@ router.get('/:id', (req, res) => {
 router.post('/newpost', (req, res) => {
     let postInfo = {
         instance: req.body.instance,
-        imageUpload: req.body.imageUpload
+        imageUpload: req.body.imageUpload,
+        postedBy: req.body.postedBy,
+        date: req.body.date
     }
     Posts.create(postInfo)
     .then((post) => {
         console.log(post)
         Posts.find()
-        .then((posts) => {
+        .then((post) => {
             res.send(post)
         })
     }) 

@@ -19,89 +19,15 @@ router.use(express.json())
 router.use(express.urlencoded({ extended: true }));
 
 
-// MULTER--------------------------------
-
-// const fileFilter = (req, file, cb) => {
-
-//     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/gif') {
-//         cb(null, true)
-//     } else {
-//         cb(null, false)
-//     }
-// }
- 
-// const upload = multer({
-//     storage: storage,
-//     limits: {
-//         fileSize: 1024 * 1024 * 5
-//     },
-//     fileFilter: fileFilter
-// })
-
-
-
-// PASSPORT------------------------------
-
-// router.use(passport.initialize());
-// router.use(passport.session());
-
-// passport.serializeUser((user, done) => {
-//     done(null, user.id)
-// })
-
-// passport.deserializeUser((id, done) => {
-//     Users.findById(id, (err, user) => {
-//         done(err, user)
-//     })
-// }) 
-
-// passport.use(new localStrategy((username, password, done) => {
-//     Users.findOne({ username: username }, (err, user) => {
-//         if (err) return done(err)
-//         if (!user) return done(null, false, { message: "Incorrect username"})
-        
-//         bcrypt.compare(password, user.password, (err, res) => {
-//             if (err) return done(err)
-//             if (res === false) {
-//                 return done(null, false, {message: "incorrect password"})
-//             }
-//             return done(null, user)
-//         })
-//     })
-// }))
-
-
-
-// function isLoggedIn(req, res, next) {
-// 	if (req.isAuthenticated()) return next();
-// 	res.redirect('/login');
-//     console.log('hi')
-
-// }
-
-// function isLoggedOut(req, res, next) {
-// 	if (!req.isAuthenticated()) return next();
-// 	res.redirect('/');
-//     console.log('he')
-// }
-
-
-
-// ___________________________________________
-
-
 
 // CREATE new user
 
 router.post('/register', async (req, res) => {
 
-    // const saltHash = genPassword(req.body.password)
-    // const salt = saltHash;
-    // const hash = saltHash.hash;
-
     const user = await Profile.findOne({username: req.body.username})
+
     if(user) {
-        return res.status(400).json({msg: "that username already exists"})
+        return res.status(400).json({msg: "That Username Already Exists"})
     }
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -117,8 +43,6 @@ router.post('/register', async (req, res) => {
                     software: req.body.software,
                     hardware: req.body.hardware,
                     profileImage: req.body.profileImage,
-                    // hash: hash,
-                    // salt: salt
                 }
                 Profile.create(userInfo)
                 .then((user) => {
@@ -136,16 +60,27 @@ router.post('/register', async (req, res) => {
 // LOGIN to profile
 
 
-// router.post('/login', passport.authenticate('local', {
-// 	successRedirect: '/',
-// 	failureRedirect: '/login?error=true'
-// }));
+router.get('/profile', auth, async(req, res) => {
+    const user = await Profile.findById(req.user._id)
+    console.log(req.user._id + "te")
+    res.json({
+        id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        company: user.company,
+        occupation: user.occupation,
+        position: user.position,
+        software: user.software,
+        hardware: user.hardware
+    })
+})
 
 
 router.post('/login', async (req, res) => {
     const user = await Profile.findOne({username: req.body.username})
     if(!user) {
-        return res.status(400).json({msg: "user not found in db"})
+        return res.status(400).json({msg: "User Not Found"})
     }
     bcrypt.compare(req.body.password, user.password, (err, response) => {
         if(!response) {
@@ -173,7 +108,7 @@ router.post('/login', async (req, res) => {
 
 // READ all users back
 
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
     let username = req.params.username
     let id = req.params.id
     Profile.find()
