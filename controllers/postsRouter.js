@@ -66,7 +66,7 @@ router.post('/newpost', (req, res) => {
     .then((post) => {
         console.log(post)
         Posts.find()
-        .then((posts) => {
+        .then((post) => {
             res.send(post)
         })
     }) 
