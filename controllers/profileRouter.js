@@ -113,25 +113,25 @@ router.post('/login', async (req, res) => {
 
 // READ all users back
 
-// router.get('/', (req, res) => {
-//     let username = req.params.username
-//     let id = req.params.id
-//     const user = Profile.findOne({username: req.body.username})
-//     if(!user) {
-//         res.redirect('/login')
-//         console.log('test')
-//         // window.location="/login"
-//     } else {
-//         res.redirect('/posts/days')
-//         console.log('test2')
-//         // window.locaiton="/posts/days"
-//     }
-//     // Profile.find()
-//     // .then((profs) => {
-//     //     res.send(profs)
-//     //     console.log(profs)
-//     // })
-// })
+router.get('/', (req, res) => {
+    let username = req.params.username
+    let id = req.params.id
+    const user = Profile.findOne({username: req.body.username})
+    // if(!user) {
+    //     res.redirect('/login')
+    //     console.log('test')
+    //     // window.location="/login"
+    // } else {
+    //     res.redirect('/posts/days')
+    //     console.log('test2')
+    //     // window.locaiton="/posts/days"
+    // }
+    Profile.find()
+    .then((profs) => {
+        res.send(profs)
+        console.log(profs)
+    })
+})
 
 
 // READ specific user back
