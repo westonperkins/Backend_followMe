@@ -78,31 +78,36 @@ router.get('/profile', auth, async(req, res) => {
 
 
 router.post('/login', async (req, res) => {
-    const user = await Profile.findOne({username: req.body.username})
-    if(!user) {
-        return res.status(400).json({msg: "User Not Found"})
-    }
-    bcrypt.compare(req.body.password, user.password, (err, response) => {
-        if(!response) {
-            return res.status(400).send("Error: " + err)
-        } else {
-            const token = webToken.sign({_id: user._id}, process.env.WEBTOKEN_SECRET)
-            res.json({
-                token: token,
-                user: {
-                    id: user._id,
-                    username: user.username,
-                    name: user.name,
-                    email: user.email,
-                    company: user.company,
-                    occupation: user.occupation,
-                    position: user.position,
-                    software: user.software,
-                    hardware: user.hardware
-                }
-            })
+    try {
+        const user = await Profile.findOne({username: req.body.username})
+        if(!user) {
+            return res.status(400).json({msg: "User Not Found"})
         }
-    })
+        bcrypt.compare(req.body.password, user.password, (err, response) => {
+            if(!response) {
+                return res.status(400).send("Error: " + err)
+            } else {
+                const token = webToken.sign({_id: user._id}, process.env.WEBTOKEN_SECRET)
+                res.json({
+                    token: token,
+                    user: {
+                        id: user._id,
+                        username: user.username,
+                        name: user.name,
+                        email: user.email,
+                        company: user.company,
+                        occupation: user.occupation,
+                        position: user.position,
+                        software: user.software,
+                        hardware: user.hardware
+                    }
+                })
+            }
+        })
+    } catch {
+        console.log(err + "profilerouter error")
+        next()
+    }
 })
 
 
