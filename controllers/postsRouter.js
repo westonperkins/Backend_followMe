@@ -34,7 +34,7 @@ const upload = multer({
 
 
 // READ main feed
-router.get('/days', (req, res) => {
+router.get('/days', auth, (req, res) => {
     Posts.find().sort({updatedAt:-1})
     .then((posts) => {
         res.send(posts)
