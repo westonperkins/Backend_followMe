@@ -5,7 +5,7 @@
 ## About Follow Me
 Our app allows users to share activities from the day-to-day of their jobs. By sharing their day-to-day work-related activities, the app can provide user to see other real-world examples of jobs or companies they're interested in. 
 
-<img src="./public/img/FollowMe.png">
+<img src="./img/FollowMe.png">
 
 
 #### Test it out here: [Follow Me](https://followmeapplication.herokuapp.com/)
@@ -22,7 +22,7 @@ Our app allows users to share activities from the day-to-day of their jobs. By s
 - Bcrypt
 
 ## Wireframes
-<img src="./public/img/wireframes_balsamiq.png">
+<img src="./img/wireframes_balsamiq.png">
 
 
 ## User Stories
