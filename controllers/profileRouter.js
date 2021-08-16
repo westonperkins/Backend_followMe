@@ -61,6 +61,24 @@ router.post('/register', async (req, res) => {
 })
 
 
+
+router.get('/profile', auth, async(req, res) => {
+    const user = await Profile.findById(req.user._id)
+    console.log(req.user._id + "te")
+    res.json({
+        id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        company: user.company,
+        occupation: user.occupation,
+        position: user.position,
+        software: user.software,
+        hardware: user.hardware
+    })
+})
+
+
 // LOGIN to profile
 
 router.post('/login', async (req, res) => {
@@ -144,21 +162,6 @@ router.get('/:username', (req, res) => {
 
 })
 
-router.get('/profile', auth, async(req, res) => {
-    const user = await Profile.findById(req.user._id)
-    // console.log(req.user._id + "te")
-    res.json({
-        id: user._id,
-        name: user.name,
-        username: user.username,
-        email: user.email,
-        company: user.company,
-        occupation: user.occupation,
-        position: user.position,
-        software: user.software,
-        hardware: user.hardware
-    })
-})
 
 router.get('/profile/:name', (req, res) => {
     let name = req.params.name
