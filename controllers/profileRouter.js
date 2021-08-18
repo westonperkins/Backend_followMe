@@ -25,9 +25,13 @@ router.use(express.urlencoded({ extended: true }));
 router.post('/register', async (req, res) => {
 
     const user = await Profile.findOne({username: req.body.username})
+    const email = await Profile.findOne({email: req.body.email})
 
     if(user) {
         return res.status(400).json({msg: "That Username Already Exists"})
+    }
+    if(email) {
+        return res.status(400).json({msg: "We already have that email registered in our database"})
     }
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -57,8 +61,6 @@ router.post('/register', async (req, res) => {
 })
 
 
-// LOGIN to profile
-
 
 router.get('/profile', auth, async(req, res) => {
     const user = await Profile.findById(req.user._id)
@@ -76,6 +78,8 @@ router.get('/profile', auth, async(req, res) => {
     })
 })
 
+
+// LOGIN to profile
 
 router.post('/login', async (req, res) => {
     try {
@@ -136,16 +140,16 @@ router.get('/', (req, res) => {
 
 // READ specific user back
 
-router.get('/:id', (req, res) => {
-    let username = req.params.username
-    let id = req.params.id
-    Profile.find({_id: id})
-    .then((profs) => {
-        res.send(profs)
-        console.log(profs)
-    })
+// router.get('/:id', (req, res) => {
+//     let username = req.params.username
+//     let id = req.params.id
+//     Profile.find({_id: id})
+//     .then((profs) => {
+//         res.send(profs)
+//         console.log(profs)
+//     })
 
-})
+// })
 
 router.get('/:username', (req, res) => {
     let username = req.params.username
@@ -159,9 +163,19 @@ router.get('/:username', (req, res) => {
 })
 
 
+router.get('/profile/:name', (req, res) => {
+    let name = req.params.name
+    Profile.find({name: name})
+    .then((userInfo) => {
+        res.send(userInfo)
+    }) 
+})
+
+
+
 // UPDATE user profile
 
-router.put('/:id/edit', (req, res) => {
+router.put('/username/edit', (req, res) => {
     let id = req.params.id
     let username = req.params.username
     Profile.findOneAndUpdate(
